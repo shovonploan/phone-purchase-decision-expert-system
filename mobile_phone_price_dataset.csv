@@ -1,0 +1,221 @@
+Brand,Model,Price,RAM,Storage,Battery,Camera,Display_Size,Processor,5G,Rating
+Motorola,Motorola Plus4,75227,4GB,128GB,5500,200MP,6.1,Snapdragon 7,Yes,3.6
+Nokia,Nokia Max30,94725,12GB,256GB,4500,64MP,6.8,MediaTek Dimensity,No,3.7
+Google,Google A3,86209,16GB,512GB,6000,64MP,6.5,Apple Bionic,No,4.4
+Samsung,Samsung Note15,28030,6GB,128GB,5500,64MP,6.1,Exynos,Yes,3.9
+Realme,Realme S24,57538,4GB,256GB,5000,48MP,6.5,MediaTek Dimensity,Yes,5.0
+Apple,Apple Ultra25,119871,16GB,512GB,5000,64MP,6.1,Snapdragon 8 Gen,Yes,3.6
+Oppo,Oppo S3,53366,6GB,128GB,6000,12MP,6.1,Snapdragon 7,Yes,3.9
+Apple,Apple Plus2,118510,4GB,64GB,6000,12MP,6.4,Apple Bionic,Yes,4.8
+Apple,Apple S21,116342,6GB,512GB,4500,108MP,6.4,Snapdragon 7,Yes,3.9
+Vivo,Vivo Ultra24,106992,12GB,64GB,5500,108MP,6.4,Snapdragon 7,No,3.7
+Realme,Realme Plus4,28486,12GB,256GB,4500,64MP,6.7,MediaTek Dimensity,Yes,3.8
+Xiaomi,Xiaomi S7,102716,4GB,256GB,5000,12MP,6.7,MediaTek Dimensity,Yes,3.8
+Samsung,Samsung Note30,58000,6GB,128GB,4000,200MP,6.4,Snapdragon 7,No,3.6
+Nokia,Nokia A28,50904,12GB,64GB,6000,12MP,6.4,Snapdragon 7,No,4.4
+Xiaomi,Xiaomi Pro14,46069,6GB,256GB,4500,200MP,6.5,Apple Bionic,No,3.9
+Nokia,Nokia Plus21,81871,8GB,512GB,5500,200MP,6.7,Tensor,Yes,4.1
+Xiaomi,Xiaomi Max11,104866,8GB,512GB,5500,48MP,6.5,Tensor,No,4.2
+OnePlus,OnePlus Note22,57666,4GB,256GB,4000,64MP,6.4,Exynos,No,4.3
+Vivo,Vivo Ultra20,50705,16GB,256GB,4000,108MP,6.1,MediaTek Dimensity,No,4.8
+Xiaomi,Xiaomi Note3,49095,6GB,512GB,5000,12MP,6.8,Snapdragon 8 Gen,Yes,4.6
+Realme,Realme A3,22309,6GB,64GB,4500,200MP,6.7,Snapdragon 8 Gen,No,3.9
+Xiaomi,Xiaomi Pro17,50738,6GB,512GB,6000,64MP,6.1,MediaTek Dimensity,Yes,4.5
+Nokia,Nokia Max22,109751,4GB,512GB,4500,48MP,6.1,Exynos,No,3.8
+Xiaomi,Xiaomi Note9,98694,12GB,64GB,5000,200MP,6.8,MediaTek Dimensity,Yes,4.5
+OnePlus,OnePlus Plus8,55573,16GB,64GB,5500,64MP,6.1,Tensor,Yes,3.8
+Google,Google Ultra30,51884,8GB,256GB,4500,108MP,6.8,Snapdragon 8 Gen,Yes,4.1
+Samsung,Samsung Pro7,116576,12GB,256GB,5000,48MP,6.5,Snapdragon 7,No,3.9
+Xiaomi,Xiaomi Plus9,99771,4GB,256GB,5000,200MP,6.8,Exynos,No,3.6
+Xiaomi,Xiaomi Max6,58283,6GB,128GB,4500,64MP,6.8,Apple Bionic,Yes,4.4
+Google,Google S14,10417,4GB,64GB,4500,108MP,6.8,Apple Bionic,No,4.8
+Xiaomi,Xiaomi A23,27893,8GB,64GB,4500,108MP,6.5,Snapdragon 7,No,4.5
+Samsung,Samsung Ultra20,117539,6GB,256GB,5500,108MP,6.1,Tensor,Yes,3.6
+Motorola,Motorola Ultra30,106311,12GB,64GB,5000,48MP,6.1,Exynos,No,4.4
+Apple,Apple Pro16,94057,12GB,512GB,4500,108MP,6.5,Exynos,Yes,4.1
+Motorola,Motorola A16,29157,8GB,256GB,4000,200MP,6.7,Exynos,No,4.2
+Apple,Apple A21,30254,16GB,64GB,6000,200MP,6.7,Snapdragon 8 Gen,No,4.6
+Google,Google A4,119169,12GB,256GB,4000,48MP,6.4,Tensor,No,4.0
+Motorola,Motorola Pro11,115287,16GB,256GB,4500,12MP,6.4,Snapdragon 8 Gen,No,3.9
+Nokia,Nokia S14,102100,12GB,128GB,5000,12MP,6.4,Snapdragon 7,No,4.0
+Motorola,Motorola Plus4,84863,4GB,64GB,6000,108MP,6.1,Tensor,No,4.2
+Nokia,Nokia S13,83842,16GB,64GB,4500,64MP,6.1,Apple Bionic,No,4.3
+Apple,Apple A20,99490,12GB,128GB,4500,12MP,6.1,Tensor,No,4.6
+Realme,Realme Ultra17,37528,16GB,64GB,4000,48MP,6.4,Snapdragon 7,Yes,4.3
+Vivo,Vivo Max5,82729,8GB,64GB,5000,12MP,6.1,Tensor,No,4.0
+Xiaomi,Xiaomi Ultra3,106071,8GB,512GB,4000,64MP,6.8,Snapdragon 8 Gen,Yes,3.8
+Realme,Realme Ultra3,95934,4GB,128GB,5500,12MP,6.7,Snapdragon 7,Yes,3.6
+Google,Google Max23,32570,4GB,512GB,5000,12MP,6.8,Apple Bionic,Yes,4.6
+Google,Google A27,81618,8GB,256GB,5500,12MP,6.8,Exynos,No,4.2
+Motorola,Motorola Ultra29,102956,12GB,128GB,6000,64MP,6.1,Snapdragon 7,No,4.3
+Nokia,Nokia Note25,70574,6GB,256GB,5500,200MP,6.7,Apple Bionic,Yes,4.8
+Google,Google Pro10,98185,8GB,128GB,5000,200MP,6.7,MediaTek Dimensity,No,4.7
+Realme,Realme S6,44200,6GB,256GB,4500,108MP,6.8,Tensor,Yes,4.7
+Motorola,Motorola Pro20,26260,12GB,128GB,6000,64MP,6.7,Apple Bionic,Yes,3.6
+OnePlus,OnePlus S3,49567,8GB,64GB,5500,64MP,6.8,Exynos,No,3.9
+Oppo,Oppo Plus20,112201,12GB,512GB,6000,200MP,6.7,Tensor,Yes,4.3
+Apple,Apple S30,51849,4GB,64GB,5000,200MP,6.5,Apple Bionic,Yes,4.7
+Oppo,Oppo Max8,83131,16GB,512GB,5000,12MP,6.8,Exynos,Yes,3.6
+Google,Google Note14,59381,16GB,512GB,5500,108MP,6.4,Exynos,Yes,3.9
+Vivo,Vivo Max3,12964,8GB,512GB,5000,200MP,6.1,Tensor,No,4.3
+OnePlus,OnePlus Max22,23397,8GB,64GB,5000,48MP,6.5,Apple Bionic,Yes,3.9
+Realme,Realme Note6,81677,6GB,128GB,5500,64MP,6.1,Apple Bionic,No,4.9
+Nokia,Nokia A30,48209,4GB,128GB,6000,48MP,6.1,Snapdragon 7,Yes,3.8
+Oppo,Oppo Ultra25,29273,16GB,512GB,5000,200MP,6.4,MediaTek Dimensity,Yes,3.5
+Vivo,Vivo Pro17,42272,12GB,512GB,5000,200MP,6.1,Tensor,No,4.8
+Vivo,Vivo Pro22,51365,16GB,64GB,5000,12MP,6.4,Snapdragon 8 Gen,Yes,3.6
+Samsung,Samsung A11,22508,16GB,128GB,4000,200MP,6.5,MediaTek Dimensity,No,4.8
+Google,Google S2,11130,12GB,256GB,5500,200MP,6.1,Apple Bionic,No,4.9
+Apple,Apple Note24,76480,4GB,64GB,5000,200MP,6.4,Apple Bionic,Yes,3.6
+Realme,Realme Note15,19557,12GB,256GB,4000,108MP,6.5,MediaTek Dimensity,Yes,4.0
+Xiaomi,Xiaomi Note30,83283,16GB,64GB,4500,200MP,6.8,Apple Bionic,No,4.1
+Xiaomi,Xiaomi Max16,87481,16GB,512GB,4000,108MP,6.4,Snapdragon 8 Gen,Yes,3.8
+Oppo,Oppo S30,18471,12GB,512GB,5500,200MP,6.5,Apple Bionic,Yes,4.9
+Apple,Apple S28,29828,16GB,256GB,6000,108MP,6.8,Snapdragon 8 Gen,No,3.7
+Oppo,Oppo S5,106310,6GB,64GB,6000,108MP,6.4,Tensor,Yes,3.6
+Samsung,Samsung S17,77747,8GB,256GB,5500,12MP,6.1,Snapdragon 8 Gen,No,4.1
+Google,Google Ultra12,70608,6GB,256GB,4500,12MP,6.1,Apple Bionic,Yes,4.0
+Apple,Apple A13,100820,12GB,128GB,5000,108MP,6.8,Snapdragon 8 Gen,No,4.0
+Vivo,Vivo Max7,61792,8GB,256GB,6000,12MP,6.5,Exynos,No,4.1
+Apple,Apple A19,69169,4GB,64GB,5500,48MP,6.8,Apple Bionic,Yes,3.8
+Google,Google Note10,113630,8GB,128GB,5000,12MP,6.7,Snapdragon 7,No,4.7
+Realme,Realme Plus15,49267,6GB,512GB,6000,48MP,6.7,MediaTek Dimensity,Yes,4.7
+Nokia,Nokia Plus28,118420,6GB,512GB,5500,48MP,6.1,Snapdragon 8 Gen,No,4.2
+Google,Google Note16,25125,16GB,128GB,4000,200MP,6.5,Apple Bionic,No,4.2
+Google,Google S30,34810,8GB,256GB,6000,64MP,6.7,Tensor,No,4.5
+Nokia,Nokia S18,80474,16GB,512GB,4000,200MP,6.1,Snapdragon 7,No,4.2
+Vivo,Vivo S29,40498,12GB,512GB,4500,200MP,6.7,Apple Bionic,Yes,3.8
+Xiaomi,Xiaomi Pro22,66200,16GB,128GB,4500,108MP,6.8,Tensor,No,3.7
+OnePlus,OnePlus Plus18,59046,4GB,64GB,4000,48MP,6.1,Apple Bionic,No,4.3
+Google,Google Pro21,102142,16GB,64GB,5500,48MP,6.4,Snapdragon 7,Yes,4.6
+Realme,Realme Note27,19018,12GB,64GB,4500,200MP,6.8,Apple Bionic,No,5.0
+Motorola,Motorola S29,9060,12GB,256GB,4500,48MP,6.8,Snapdragon 7,No,3.9
+OnePlus,OnePlus A11,91640,4GB,256GB,6000,48MP,6.5,MediaTek Dimensity,Yes,4.7
+Samsung,Samsung Note21,106973,6GB,512GB,6000,48MP,6.7,Exynos,No,3.8
+Oppo,Oppo A20,117811,12GB,64GB,4000,48MP,6.8,Snapdragon 7,Yes,4.8
+Realme,Realme Note20,80028,6GB,64GB,6000,64MP,6.7,Tensor,Yes,4.7
+Nokia,Nokia S8,17025,12GB,128GB,6000,64MP,6.7,Snapdragon 8 Gen,Yes,3.9
+Xiaomi,Xiaomi Plus4,87277,8GB,128GB,5000,12MP,6.4,MediaTek Dimensity,Yes,3.6
+OnePlus,OnePlus Ultra10,89760,6GB,128GB,6000,48MP,6.7,Exynos,No,4.9
+Vivo,Vivo S23,23467,12GB,256GB,4000,200MP,6.1,Tensor,Yes,4.2
+Xiaomi,Xiaomi Plus10,99825,4GB,512GB,6000,12MP,6.1,Apple Bionic,No,3.9
+Google,Google Max12,11599,4GB,256GB,5500,108MP,6.7,Snapdragon 7,Yes,4.4
+Oppo,Oppo Pro5,72353,12GB,64GB,5000,64MP,6.1,Snapdragon 8 Gen,No,4.0
+Vivo,Vivo Plus20,18142,6GB,512GB,4000,12MP,6.8,Snapdragon 8 Gen,No,3.6
+Xiaomi,Xiaomi A19,71465,4GB,512GB,4500,12MP,6.1,Tensor,Yes,4.2
+Xiaomi,Xiaomi Ultra23,57938,6GB,256GB,6000,200MP,6.7,Snapdragon 8 Gen,Yes,4.4
+Xiaomi,Xiaomi Ultra25,10439,12GB,128GB,5500,12MP,6.7,Tensor,Yes,4.2
+OnePlus,OnePlus A18,110211,8GB,512GB,4000,12MP,6.7,Apple Bionic,No,4.3
+Motorola,Motorola Note10,72752,4GB,128GB,4000,48MP,6.1,Tensor,Yes,3.6
+Realme,Realme Pro26,56042,12GB,512GB,5000,108MP,6.1,Snapdragon 7,Yes,4.4
+OnePlus,OnePlus Ultra21,51850,4GB,512GB,6000,108MP,6.4,Snapdragon 8 Gen,No,3.7
+Apple,Apple S28,58874,12GB,64GB,5500,64MP,6.1,Apple Bionic,No,4.2
+OnePlus,OnePlus A29,8915,6GB,64GB,4000,108MP,6.1,Apple Bionic,No,4.8
+Samsung,Samsung Note2,51603,12GB,64GB,5000,48MP,6.1,Snapdragon 8 Gen,Yes,4.8
+Nokia,Nokia Pro1,67919,12GB,256GB,4500,12MP,6.4,Exynos,No,3.6
+Xiaomi,Xiaomi Plus15,37567,12GB,64GB,4000,200MP,6.1,Tensor,No,3.9
+Vivo,Vivo Note12,87299,8GB,128GB,4000,48MP,6.4,Tensor,No,3.7
+Oppo,Oppo Plus1,47655,4GB,256GB,6000,12MP,6.1,MediaTek Dimensity,No,4.2
+Oppo,Oppo Plus5,69154,12GB,256GB,5500,48MP,6.1,Snapdragon 8 Gen,Yes,4.6
+Motorola,Motorola Plus25,9043,6GB,256GB,4000,108MP,6.1,Tensor,No,4.4
+Samsung,Samsung Note25,68090,8GB,256GB,5000,12MP,6.1,Exynos,No,3.6
+Google,Google Plus27,46775,8GB,512GB,4000,108MP,6.7,Exynos,No,3.9
+Vivo,Vivo Note30,9265,4GB,256GB,6000,64MP,6.7,Snapdragon 8 Gen,No,4.6
+Apple,Apple Max24,44995,16GB,128GB,4000,64MP,6.4,Tensor,No,4.4
+Xiaomi,Xiaomi A28,32438,6GB,64GB,4000,200MP,6.4,Exynos,Yes,4.1
+Nokia,Nokia Pro14,88169,12GB,256GB,5000,200MP,6.8,Exynos,Yes,4.9
+Motorola,Motorola S27,91940,4GB,128GB,5500,108MP,6.7,Snapdragon 7,Yes,3.6
+Oppo,Oppo Pro30,78371,6GB,256GB,4000,12MP,6.5,Snapdragon 8 Gen,Yes,3.9
+Xiaomi,Xiaomi Plus18,88055,4GB,128GB,4000,64MP,6.4,Snapdragon 7,No,4.6
+Apple,Apple Pro28,100284,6GB,512GB,6000,12MP,6.7,Apple Bionic,No,4.5
+Google,Google Note19,56143,8GB,64GB,4000,108MP,6.1,Exynos,Yes,3.8
+Samsung,Samsung Note22,74192,4GB,512GB,6000,108MP,6.4,MediaTek Dimensity,Yes,4.2
+Samsung,Samsung Ultra29,92890,4GB,128GB,4000,108MP,6.7,Tensor,Yes,3.6
+OnePlus,OnePlus Pro28,58815,6GB,128GB,6000,200MP,6.7,Apple Bionic,No,4.9
+Motorola,Motorola S30,29288,4GB,64GB,6000,48MP,6.4,Apple Bionic,Yes,4.8
+Realme,Realme Pro4,117181,12GB,256GB,5000,200MP,6.7,Tensor,Yes,4.8
+Realme,Realme Max26,8270,16GB,256GB,5500,64MP,6.8,MediaTek Dimensity,Yes,3.6
+Apple,Apple Ultra4,75929,12GB,256GB,5000,108MP,6.5,Snapdragon 8 Gen,No,4.0
+Realme,Realme Pro21,113332,8GB,512GB,4500,12MP,6.4,Tensor,Yes,3.8
+Google,Google Max30,112261,16GB,256GB,4500,64MP,6.1,Exynos,Yes,4.1
+Google,Google Plus23,61442,16GB,64GB,5000,48MP,6.7,Exynos,No,4.1
+Samsung,Samsung A4,116388,6GB,256GB,5500,200MP,6.1,Snapdragon 7,Yes,4.2
+Realme,Realme Max5,29005,6GB,512GB,5000,108MP,6.5,MediaTek Dimensity,No,4.2
+Apple,Apple A3,32184,12GB,64GB,5500,48MP,6.7,Exynos,No,5.0
+Apple,Apple Note15,43498,8GB,64GB,4500,64MP,6.8,Exynos,No,4.1
+Xiaomi,Xiaomi Plus25,45470,4GB,512GB,5500,64MP,6.5,Exynos,No,3.7
+Apple,Apple Pro21,90790,16GB,64GB,4000,64MP,6.7,Apple Bionic,Yes,4.5
+Realme,Realme Note7,89025,8GB,128GB,5000,108MP,6.5,MediaTek Dimensity,No,4.0
+Vivo,Vivo Max29,27897,6GB,256GB,4500,64MP,6.4,Snapdragon 8 Gen,Yes,4.1
+Apple,Apple Pro22,118103,12GB,128GB,5500,200MP,6.5,Snapdragon 8 Gen,No,3.9
+Vivo,Vivo Pro1,13692,16GB,128GB,4000,48MP,6.1,Tensor,Yes,4.1
+Nokia,Nokia Pro10,30488,6GB,256GB,5000,108MP,6.5,Snapdragon 8 Gen,Yes,4.2
+OnePlus,OnePlus Ultra3,85685,16GB,512GB,5000,64MP,6.8,Snapdragon 8 Gen,Yes,4.4
+Google,Google Pro4,29340,8GB,512GB,4000,12MP,6.4,Exynos,No,4.8
+Google,Google Pro24,26367,8GB,64GB,5500,200MP,6.7,MediaTek Dimensity,No,3.9
+Xiaomi,Xiaomi S6,26569,16GB,64GB,4000,200MP,6.5,Snapdragon 7,Yes,3.6
+OnePlus,OnePlus Note9,53362,8GB,64GB,6000,200MP,6.5,Exynos,Yes,5.0
+Oppo,Oppo Note5,39789,8GB,256GB,4500,12MP,6.7,Snapdragon 8 Gen,Yes,3.7
+Nokia,Nokia Note16,85351,12GB,512GB,5500,108MP,6.1,MediaTek Dimensity,Yes,4.8
+Apple,Apple S28,100596,12GB,256GB,5500,12MP,6.1,Snapdragon 7,Yes,4.8
+Motorola,Motorola Pro19,26548,16GB,256GB,5000,48MP,6.1,Snapdragon 7,Yes,4.3
+Samsung,Samsung Pro11,113226,6GB,256GB,4000,108MP,6.4,Exynos,Yes,4.8
+Apple,Apple Max26,12436,12GB,512GB,4500,12MP,6.1,Tensor,Yes,3.7
+Motorola,Motorola Plus9,100839,8GB,64GB,5000,200MP,6.7,Apple Bionic,No,3.8
+Samsung,Samsung S7,40949,16GB,128GB,4500,108MP,6.4,MediaTek Dimensity,No,4.6
+Google,Google S7,65358,8GB,64GB,5000,200MP,6.7,MediaTek Dimensity,Yes,4.2
+Oppo,Oppo A26,39071,12GB,512GB,5000,64MP,6.4,MediaTek Dimensity,No,4.6
+Nokia,Nokia Note20,8081,4GB,64GB,5500,108MP,6.5,MediaTek Dimensity,Yes,4.3
+Nokia,Nokia Pro20,117160,6GB,128GB,5000,48MP,6.4,Tensor,Yes,3.8
+Motorola,Motorola Note8,12136,6GB,256GB,4000,200MP,6.8,Tensor,Yes,4.8
+Vivo,Vivo Ultra24,44433,6GB,64GB,6000,108MP,6.8,Exynos,No,4.8
+Xiaomi,Xiaomi Ultra13,86033,8GB,512GB,5500,64MP,6.1,Snapdragon 7,Yes,4.1
+Realme,Realme Max7,65332,16GB,64GB,6000,200MP,6.7,Exynos,No,4.5
+Motorola,Motorola S21,105543,16GB,64GB,5000,64MP,6.8,Apple Bionic,Yes,4.0
+OnePlus,OnePlus Ultra10,37867,12GB,128GB,4000,48MP,6.5,Snapdragon 8 Gen,No,3.5
+Apple,Apple A10,80214,12GB,256GB,6000,48MP,6.7,Tensor,No,4.4
+Vivo,Vivo Plus16,105473,6GB,512GB,4000,12MP,6.5,Exynos,Yes,4.7
+Xiaomi,Xiaomi Max11,50453,12GB,128GB,6000,200MP,6.1,MediaTek Dimensity,No,3.6
+Motorola,Motorola Note13,42397,8GB,64GB,6000,48MP,6.8,Tensor,Yes,4.0
+OnePlus,OnePlus Max19,81272,12GB,128GB,5500,108MP,6.4,MediaTek Dimensity,Yes,4.6
+Oppo,Oppo Ultra11,45504,8GB,256GB,4000,200MP,6.7,Exynos,No,3.6
+Vivo,Vivo S24,44240,16GB,256GB,4500,64MP,6.8,Apple Bionic,No,4.9
+Apple,Apple Pro5,68480,6GB,512GB,5000,64MP,6.5,Exynos,Yes,3.8
+Motorola,Motorola A24,47932,6GB,64GB,5000,48MP,6.8,MediaTek Dimensity,No,4.3
+Motorola,Motorola Note14,8624,16GB,512GB,6000,12MP,6.5,Snapdragon 8 Gen,Yes,4.8
+Motorola,Motorola Pro22,39431,12GB,512GB,5500,108MP,6.4,Snapdragon 7,Yes,4.9
+OnePlus,OnePlus S12,25639,16GB,128GB,5000,64MP,6.7,MediaTek Dimensity,No,3.8
+Nokia,Nokia Plus16,19067,4GB,256GB,4500,12MP,6.8,Exynos,No,3.7
+Samsung,Samsung S28,113544,12GB,128GB,6000,200MP,6.5,Apple Bionic,Yes,4.6
+OnePlus,OnePlus Max9,26501,6GB,256GB,6000,48MP,6.5,Tensor,Yes,4.2
+Vivo,Vivo Note13,10579,12GB,128GB,4000,12MP,6.1,Exynos,Yes,3.7
+Apple,Apple Note5,100342,16GB,128GB,5500,12MP,6.7,Snapdragon 7,No,4.0
+Apple,Apple Pro29,85048,16GB,512GB,4000,108MP,6.5,Tensor,Yes,3.8
+Realme,Realme A2,41634,6GB,512GB,6000,48MP,6.4,MediaTek Dimensity,No,3.7
+Vivo,Vivo Max13,115166,6GB,512GB,5500,200MP,6.7,Exynos,Yes,4.0
+Apple,Apple Plus9,25385,4GB,512GB,6000,200MP,6.8,Apple Bionic,Yes,3.7
+Realme,Realme Pro10,110485,6GB,512GB,4500,108MP,6.7,Snapdragon 7,No,4.9
+Samsung,Samsung Pro20,21873,4GB,256GB,4000,12MP,6.5,MediaTek Dimensity,Yes,4.0
+Oppo,Oppo Max20,19658,6GB,256GB,6000,200MP,6.5,MediaTek Dimensity,No,3.5
+Realme,Realme A6,16441,12GB,128GB,6000,200MP,6.5,Tensor,No,3.6
+Apple,Apple Note16,32792,12GB,512GB,4000,48MP,6.4,MediaTek Dimensity,No,3.9
+Google,Google A8,12252,16GB,128GB,6000,108MP,6.5,Snapdragon 7,No,4.6
+Nokia,Nokia S30,39282,8GB,128GB,5500,108MP,6.8,Snapdragon 7,No,3.5
+Motorola,Motorola Pro2,30625,12GB,64GB,6000,48MP,6.4,MediaTek Dimensity,Yes,4.3
+Oppo,Oppo Plus7,75110,4GB,256GB,5000,12MP,6.5,Tensor,No,4.3
+Google,Google Note27,74708,4GB,256GB,4000,12MP,6.8,Snapdragon 7,Yes,4.9
+Nokia,Nokia S1,97260,8GB,64GB,6000,48MP,6.5,Snapdragon 8 Gen,No,4.4
+Apple,Apple A7,78920,8GB,64GB,4500,200MP,6.4,Apple Bionic,No,3.7
+Oppo,Oppo A22,44562,12GB,256GB,5000,108MP,6.1,Snapdragon 8 Gen,Yes,4.3
+Realme,Realme Pro5,94877,8GB,256GB,5000,200MP,6.5,Apple Bionic,No,4.5
+Xiaomi,Xiaomi Ultra25,111451,8GB,512GB,4500,200MP,6.4,Snapdragon 8 Gen,No,4.1
+Xiaomi,Xiaomi Pro15,16293,6GB,256GB,4000,108MP,6.4,Snapdragon 7,Yes,4.5
+Xiaomi,Xiaomi Max20,53605,6GB,64GB,5000,64MP,6.4,Tensor,Yes,4.6
+Samsung,Samsung Max24,98265,4GB,128GB,5000,200MP,6.8,MediaTek Dimensity,No,4.3
+Motorola,Motorola Plus25,104136,8GB,256GB,5000,48MP,6.5,Tensor,No,3.6
+Apple,Apple Plus7,8523,16GB,512GB,6000,64MP,6.4,MediaTek Dimensity,No,5.0
+OnePlus,OnePlus A28,84457,16GB,256GB,5500,64MP,6.1,Apple Bionic,No,5.0
+Google,Google Ultra23,70511,16GB,512GB,5500,48MP,6.1,MediaTek Dimensity,No,4.1
+Oppo,Oppo Note4,53154,6GB,512GB,4000,12MP,6.5,Apple Bionic,Yes,4.5
+Apple,Apple Pro17,104522,16GB,256GB,5500,64MP,6.7,Exynos,Yes,4.0
+Nokia,Nokia Max29,110490,8GB,128GB,4000,108MP,6.7,Apple Bionic,Yes,4.6

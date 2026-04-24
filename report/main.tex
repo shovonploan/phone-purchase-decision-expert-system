@@ -1,0 +1,484 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{seqsplit}
+\usepackage{amsmath}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{colortbl}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=blue!60!black,
+  pdftitle={New Phone Purchase Decision Expert System Report},
+  pdfauthor={Shoban Bhowmik}
+}
+
+\setstretch{1.14}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.25em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=0.25em,topsep=0.35em}
+\urlstyle{same}
+\captionsetup{font=small,labelfont=bf,skip=6pt}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{New Phone Purchase Decision Expert System}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{New Phone Purchase Decision Expert System}
+  \fancyhead[R]{\thepage}
+  \renewcommand{\headrulewidth}{0.3pt}
+}
+
+\definecolor{sectionblue}{HTML}{1D4E89}
+\definecolor{tableheadbg}{gray}{0.92}
+\titleformat{\section}{\Large\bfseries\color{sectionblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{sectionblue}}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.35em}{0.7em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.5em}
+
+\newcommand{\filepath}[1]{\path{#1}}
+\newcommand{\code}[1]{\texttt{\seqsplit{#1}}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.25}
+
+\title{\textbf{New Phone Purchase Decision Expert System}\\\large Detailed Technical Report}
+\author{\textbf{Name:} Shoban Bhowmik\\\textbf{Student ID:} 40325778\\\textbf{Course:} COMP 474 -- Intelligent Systems}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+This report documents the complete architecture and knowledge base of a CLIPS-driven expert system for phone purchase decisions. The system reasons over current-device condition, replacement economics, and user preferences to produce one primary final decision, supporting evidence, confidence-rated outputs, warnings, a category suggestion, and optional concrete model examples from market facts. The implementation keeps all reasoning logic in CLIPS and uses Python only as a runner. This document covers every template, major function, rule family, interactive question, scenario profile, test expectation, and runtime behavior used by the project.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Project Goal and Problem Framing}
+The project addresses a practical decision problem: users often do not know whether they should keep a phone, wait, repair, replace the battery, or buy a replacement. The ambiguity is caused by mixed signals. A phone may still be software-supported but slow in daily use, or physically fine but expensive to repair relative to replacement. User context complicates this further because urgency, budget, workload, and feature expectations all influence the right action.
+
+A symbolic expert system is suitable for this domain because decisions can be stated as explicit conditions, audited as rule traces, and validated through repeatable scenarios. The objective is not to ``predict a product'' but to provide explainable decision support with transparent reasoning steps.
+
+\section{Implementation Architecture}
+The codebase uses a CLIPS-first architecture. The Python program does not contain recommendation logic; it only initializes a CLIPS environment, loads knowledge files, and invokes CLIPS entry points.
+
+The runtime path begins in \filepath{EXPERTSYSTEM/run.py}. This file imports \texttt{clipspy}, loads the CLIPS modules \filepath{clips/facts.clp}, \filepath{clips/market-facts.clp}, \filepath{clips/fuzzy.clp}, \filepath{clips/rules.clp}, and \filepath{tests/sample-scenarios.clp}, and then executes one mode: default run, named scenario run, scenario test suite, or interactive questionnaire mode.
+
+The knowledge layer is split by responsibility. \filepath{facts.clp} defines all templates and a default \texttt{phone-user} profile. \filepath{fuzzy.clp} defines membership functions and a certainty-combination helper. \filepath{rules.clp} contains all inferencing behavior, output generation, and reporting format. \filepath{sample-scenarios.clp} provides both scenario fixtures and test harness logic.
+
+\section{Knowledge Model: Complete Fact Templates}
+The system currently defines 12 core templates. Their roles are summarized in Table~\ref{tab:templates}.
+
+\begin{longtable}{|L{0.22\textwidth}|L{0.71\textwidth}|}
+\caption{Template Inventory and Purpose}\label{tab:templates}\\
+\hline
+\rowcolor{tableheadbg}
+\textbf{Template} & \textbf{Purpose and Structure} \\ \hline
+\hline
+\endfirsthead
+\hline
+\rowcolor{tableheadbg}
+\textbf{Template} & \textbf{Purpose and Structure} \\ \hline
+\hline
+\endhead
+\code{phone-user} & Main case fact representing current device condition plus user preferences. Includes symbolic slots (for crisp matching) and numeric slots (for fuzzy evidence). \\ \hline
+\code{recommendation} & Action-oriented supporting advice. Fields: \texttt{rule-id}, \texttt{message}. \\ \hline
+\code{finding} & Observational evidence extracted from condition state. Fields: \texttt{rule-id}, \texttt{message}. \\ \hline
+\code{warning} & Risk/caution outputs. Fields: \texttt{rule-id}, \texttt{message}. \\ \hline
+\code{replacement-needed} & Intermediate inference fact indicating whether replacement pressure exists. Fields: \texttt{reason}, \texttt{strength}. \\ \hline
+\code{no-upgrade-needed} & Intermediate blocking fact used to suppress buy-oriented paths when phone health is strong. \\ \hline
+\code{final-decision} & Single primary decision target. Fields: \texttt{decision}, \texttt{rule-id}, \texttt{message}, \texttt{certainty}. \\ \hline
+\code{advice-category-fired} & Duplicate-control marker used to avoid repeated evidence in the same category. \\ \hline
+\code{recommendation-cf} & Confidence-weighted outputs from certainty-factor and fuzzy-evidence rules. \\ \hline
+\code{phone-category-suggestion} & High-level market category recommendation aligned with final decision. \\ \hline
+\code{phone-model-suggestion} & Concrete model candidates with rationale text (when relevant rule conditions are met). \\ \hline
+\code{market-phone} & Preprocessed market fact record used by model suggestion rules. Includes source, segment, price, and spec/value fields. \\ \hline
+\hline
+\end{longtable}
+
+\subsection{Complete \texttt{phone-user} Slot Schema}
+The \texttt{phone-user} template encodes the full decision state through the following slots:
+\texttt{phone-age}, \texttt{battery-health}, \texttt{performance}, \texttt{storage-status}, \texttt{physical-condition}, \texttt{software-support}, \texttt{platform}, \texttt{repair-cost-level}, \texttt{budget-cad}, \texttt{budget-level}, \texttt{urgency}, \texttt{camera-need}, \texttt{gaming-need}, \texttt{work-study-dependence}, \texttt{latest-model-importance}, \texttt{used-phone-comfort}, \texttt{trade-in-available}, \texttt{battery-health-percent}, \texttt{battery-score}, \texttt{performance-score}, \texttt{budget-score}, \texttt{urgency-score}, and \texttt{repair-cost-percent}.
+
+The design intentionally preserves both symbolic and numeric views of the same domain dimensions. Symbolic values are used for interpretable deterministic logic, while numeric values feed fuzzy functions and threshold-oriented certainty gates.
+
+\section{Interactive Questionnaire: Questions and Conversions}
+The interactive interview is fully implemented in CLIPS in \filepath{sample-scenarios.clp}. It asks the user explicit questions using \texttt{ask-choice} and \texttt{ask-int}, validates each response, and then derives symbolic categories from numeric fields before asserting one \texttt{phone-user} fact.
+
+The exact interactive questions are:
+\begin{enumerate}
+  \item Current phone age.
+  \item Current battery health percent.
+  \item Current performance score.
+  \item Current storage status.
+  \item Current physical condition.
+  \item Current software support status.
+  \item Current platform/ecosystem.
+  \item Estimated repair cost percent of replacement price.
+  \item Budget in CAD.
+  \item Urgency score for replacement.
+  \item Camera need level.
+  \item Gaming/performance need level.
+  \item Work/study dependence level.
+  \item Importance of latest model.
+  \item Comfort with used/refurbished phones (auto-set to \texttt{no} for high-budget level in current logic).
+  \item Trade-in availability.
+\end{enumerate}
+
+After input, CLIPS applies conversion functions:
+\begin{itemize}
+  \item \texttt{budget-cad-to-level}, \texttt{budget-cad-to-score}
+  \item \texttt{battery-percent-to-health}
+  \item \texttt{performance-score-to-level}
+  \item \texttt{urgency-score-to-level}
+  \item \texttt{repair-percent-to-level}
+\end{itemize}
+
+This approach keeps question phrasing practical for users while still giving rules the symbolic categories they require.
+
+\section{Inference Design and Rule Pipeline}
+The rule engine runs in a layered sequence. First, it infers state-control facts (replacement-needed vs. no-upgrade-needed). Second, it emits findings and supporting recommendations. Third, it emits certainty-factor and fuzzy-evidence recommendations. Fourth, it commits one final decision. Finally, it maps the final decision to category and model suggestions.
+
+\subsection{State Inference Rules}
+State inference rules establish whether the system should consider replacement actions at all. The \texttt{infer-no-upgrade-needed} rule requires a healthy condition profile (new/moderate age, good/moderate battery, fast/acceptable performance, good physical condition, supported software). Conversely, \texttt{replacement-needed} rules detect high or medium replacement pressure from combinations such as old + unsupported software, multiple major degradations, broken device with high repair level, or moderate-but-risky degradation patterns.
+
+\subsection{Finding Rules}
+The finding layer converts raw state into readable evidence facts. Current finding rules are:
+\texttt{F1} (very old phone), \texttt{F2} (poor battery), \texttt{F3} (slow performance), \texttt{F4} (full storage), \texttt{F5} (unsupported software/security). The battery finding uses \texttt{advice-category-fired} to avoid duplicate evidence in that category.
+
+\subsection{Action Recommendation Rules}
+Supporting recommendations are separate from final decisions. They include trade-in guidance (\texttt{R18}), refurbished path (\texttt{R17}), buy-new support (\texttt{R19}), keep-current support (\texttt{R20}), repair support (\texttt{R21}), avoid-unnecessary-flagship warning (\texttt{R22}), mid-range support (\texttt{R23}), flagship support (\texttt{R24}), and wait recommendation (\texttt{R25}).
+
+Each of these rules is gated by the inferred state where appropriate. For example, buy-oriented rules require \texttt{replacement-needed} and are blocked by \texttt{no-upgrade-needed}.
+
+\subsection{Certainty-Factor Rules}
+The CF layer emits graded confidence outputs. The active CF rule IDs are:
+\texttt{BUY-NEW-CF}, \texttt{WAIT-CF}, \texttt{BATTERY-REPLACE-CF}, \texttt{REPAIR-CF}, \texttt{REFURB-CF}, \texttt{MID-RANGE-CF}, \texttt{FLAGSHIP-CF}, \texttt{KEEP-CURRENT-CF}.
+
+These rules are intentionally strict. For example, \texttt{BATTERY-REPLACE-CF} requires poor battery health and suitable repair context; \texttt{REPAIR-CF} requires real device damage; \texttt{MID-RANGE-CF} and \texttt{FLAGSHIP-CF} require replacement-needed state and are blocked by no-upgrade-needed.
+
+\subsection{Fuzzy Evidence Rules}
+Fuzzy outputs are phrased as evidence signals, not final advice. The fuzzy rule IDs are:
+\texttt{FUZZY-BATTERY-POOR}, \texttt{FUZZY-PERFORMANCE-POOR}, \texttt{FUZZY-REPAIR-HIGH}, \texttt{FUZZY-BUDGET-URGENCY}, \texttt{FUZZY-WAIT}.
+
+The membership functions are defined in \filepath{fuzzy.clp}. They are piecewise functions over bounded numeric domains for battery quality, performance quality, budget pressure, urgency pressure, and repair-cost pressure.
+
+\section{Final-Decision Layer}
+The system enforces one primary final decision through salience order and \texttt{(not (final-decision))}. Current final decision rule IDs are:
+\texttt{FINAL-KEEP}, \texttt{FINAL-REPLACE-BATTERY}, \texttt{FINAL-REPAIR}, \texttt{FINAL-BUY-FLAGSHIP}, \texttt{FINAL-BUY-MIDRANGE}, \texttt{FINAL-BUY-REFURB}, \texttt{FINAL-BUY-NEW}, \texttt{FINAL-WAIT}, \texttt{FINAL-FALLBACK}.
+
+The current priority order is:
+\[
+\begin{aligned}
+\texttt{KEEP} \rightarrow \texttt{REPLACE-BATTERY} \rightarrow \texttt{REPAIR} \rightarrow \texttt{BUY-FLAGSHIP} \rightarrow \texttt{BUY-MIDRANGE} \\
+\rightarrow \texttt{BUY-REFURB} \rightarrow \texttt{BUY-NEW} \rightarrow \texttt{WAIT} \rightarrow \texttt{FALLBACK}
+\end{aligned}
+\]
+
+This ordering is intended to prefer precise outcomes (for example flagship path) over broad outcomes (generic buy-new) when both are supported.
+
+\section{Category and Model Suggestion Logic}
+Category suggestions are always produced when a matching final decision exists, using \texttt{phone-category-suggestion}. These messages are concise and decision-oriented (for example keep-current review path, battery-service path, mid-range path, or premium/flagship upgrade path).
+
+Model suggestions are generated by dedicated model rules (\texttt{M1}, \texttt{M4}, \texttt{M6}, \texttt{M8}, \texttt{M10}) against \texttt{market-phone} facts. The rules are constrained by final decision, segment, value/price/spec thresholds, and per-rule count caps through \texttt{count-model-suggestions}. If no models satisfy conditions, the report explicitly prints ``None generated.''
+
+\section{Scenario Profiles and Test Harness}
+The project includes five scenario profiles in \filepath{sample-scenarios.clp}. Each scenario asserts a full \texttt{phone-user} fact with symbolic and numeric slots.
+
+\subsection{Scenario Intent}
+Scenario-01 represents severe degradation with high replacement pressure. Scenario-02 represents a healthy phone with low urgency. Scenario-03 isolates battery-centric degradation. Scenario-04 models low budget with high urgency and meaningful wear. Scenario-05 models high-end usage demand with high budget and mixed condition.
+
+\subsection{Test Assertions}
+The harness validates four categories of behavior per scenario:
+\begin{enumerate}
+  \item expected deterministic recommendation presence (when applicable),
+  \item expected CF rule presence,
+  \item expected final decision presence,
+  \item negative checks for forbidden CFs, forbidden categories, and forbidden final decisions.
+\end{enumerate}
+
+This prevents false confidence where expected outputs appear but conflicting outputs also fire incorrectly.
+
+\section{Report Output Contract}
+The report printer in \filepath{rules.clp} always prints seven sections in fixed order:
+Final Decision, Key Findings, Supporting Recommendations, Confidence-Based Recommendations, Warnings, Suggested Phone Category, Suggested Phone Models.
+
+Each section has explicit empty-state behavior (``None generated.''). This makes output readable, stable for testing, and understandable to non-technical users.
+
+\section{Market Data Pipeline}
+The project uses two CSV sources as offline preprocessing input. The script \filepath{scripts/build_market_facts.py} selects/normalizes records and emits CLIPS facts into \filepath{clips/market-facts.clp}. At runtime, the inference engine reads this fact file directly.
+
+The current pricing normalization assumption used by preprocessing is:
+\[
+1\ \text{CAD} = 90\ \text{BDT}
+\]
+
+\section{Runtime Interface}
+From the \filepath{EXPERTSYSTEM/} directory, the supported commands are:
+\texttt{python3 run.py}, \texttt{python3 run.py --scenario scenario-01}, \texttt{python3 run.py --run-tests}, and \texttt{python3 run.py --interactive}.
+
+The Python layer does not rank decisions or inject recommendation logic. Its responsibilities are argument parsing, CLIPS module loading, and invoking CLIPS entry points.
+
+\section{Rule and Template Counts}
+The current implementation contains 55 \texttt{defrule} rules in \filepath{rules.clp}. The template count in \filepath{facts.clp} is 12 core templates. This reflects a hybrid design with substantial symbolic coverage, explicit uncertainty modeling, and structured output control.
+
+\section{Comprehensive Technical Inventory}
+This section is an exhaustive reference appendix intended to let the project be understood without opening source files. It enumerates all slot domains, all interactive prompts, all scenario fixtures, all CLIPS functions, and every active rule with trigger and output summaries.
+
+\subsection{Complete Slot-Domain Specification for \texttt{phone-user}}
+Table~\ref{tab:phoneuserslots} gives every slot in \texttt{phone-user} exactly as defined in \filepath{facts.clp}.
+
+\begin{longtable}{|L{0.28\textwidth}|L{0.65\textwidth}|}
+\caption{Full \texttt{phone-user} Slot Domains}\label{tab:phoneuserslots}\\
+\hline
+\rowcolor{tableheadbg}
+\textbf{Slot} & \textbf{Domain / Constraint} \\ \hline
+\hline
+\endfirsthead
+\hline
+\rowcolor{tableheadbg}
+\textbf{Slot} & \textbf{Domain / Constraint} \\ \hline
+\hline
+\endhead
+\texttt{phone-age} & \texttt{new, moderate, old, very-old} \\ \hline
+\texttt{battery-health} & \texttt{good, moderate, poor, very-poor} \\ \hline
+\texttt{performance} & \texttt{fast, acceptable, slow, very-slow} \\ \hline
+\texttt{storage-status} & \texttt{enough, almost-full, full} \\ \hline
+\texttt{physical-condition} & \texttt{good, minor-damage, major-damage, broken} \\ \hline
+\texttt{software-support} & \texttt{supported, limited, unsupported} \\ \hline
+\texttt{platform} & \texttt{ios, android, other} \\ \hline
+\texttt{repair-cost-level} & \texttt{low, medium, high, very-high} \\ \hline
+\texttt{budget-cad} & integer in \texttt{[0, 20000]} \\ \hline
+\texttt{budget-level} & \texttt{low, medium, high} \\ \hline
+\texttt{urgency} & \texttt{low, medium, high} \\ \hline
+\texttt{camera-need} & \texttt{low, medium, high} \\ \hline
+\texttt{gaming-need} & \texttt{low, medium, high} \\ \hline
+\texttt{work-study-dependence} & \texttt{low, medium, high} \\ \hline
+\texttt{latest-model-importance} & \texttt{low, medium, high} \\ \hline
+\texttt{used-phone-comfort} & \texttt{yes, no, maybe} \\ \hline
+\texttt{trade-in-available} & \texttt{yes, no} \\ \hline
+\texttt{battery-health-percent} & integer in \texttt{[0, 100]} \\ \hline
+\texttt{battery-score} & integer in \texttt{[0, 100]} \\ \hline
+\texttt{performance-score} & integer in \texttt{[0, 100]} \\ \hline
+\texttt{budget-score} & integer in \texttt{[0, 100]} \\ \hline
+\texttt{urgency-score} & integer in \texttt{[0, 100]} \\ \hline
+\texttt{repair-cost-percent} & integer in \texttt{[0, 100]} \\ \hline
+\hline
+\end{longtable}
+
+\subsection{Complete Interactive Prompt Sequence}
+The interactive questionnaire in \filepath{sample-scenarios.clp} asks the following prompts in this exact order:
+\begin{longtable}{|L{0.55\textwidth}|L{0.38\textwidth}|}
+\hline
+\rowcolor{tableheadbg}
+\textbf{Prompt} & \textbf{Input Type} \\ \hline
+\hline
+\endfirsthead
+\hline
+\rowcolor{tableheadbg}
+\textbf{Prompt} & \textbf{Input Type} \\ \hline
+\hline
+\endhead
+Current phone age & choice \\ \hline
+Current battery health percent & integer \\ \hline
+Current performance score & integer \\ \hline
+Current storage status & choice \\ \hline
+Current physical condition & choice \\ \hline
+Current software support status & choice \\ \hline
+Current platform/ecosystem & choice \\ \hline
+Estimated repair cost percent of replacement price & integer \\ \hline
+Your budget in CAD & integer \\ \hline
+How urgent is replacement for you (score) & integer \\ \hline
+Your camera need level & choice \\ \hline
+Your gaming/performance need level & choice \\ \hline
+How much you depend on phone for work/study & choice \\ \hline
+Importance of getting latest model & choice \\ \hline
+Comfort with used/refurbished phones & choice (or auto-set to \texttt{no} in high-budget branch) \\ \hline
+Trade-in available for current phone & choice \\ \hline
+\hline
+\end{longtable}
+
+After data collection, conversion functions derive symbolic categories from numeric inputs:
+\begin{itemize}
+  \item \texttt{budget-cad-to-level}
+  \item \texttt{budget-cad-to-score}
+  \item \texttt{battery-percent-to-health}
+  \item \texttt{performance-score-to-level}
+  \item \texttt{urgency-score-to-level}
+  \item \texttt{repair-percent-to-level}
+\end{itemize}
+
+\subsection{Complete Scenario Fixture Definitions}
+The test harness defines five complete \texttt{phone-user} fixture assertions. For traceability, each scenario's full fact values are listed in Table~\ref{tab:scenariofacts}.
+
+\begin{longtable}{|L{0.16\textwidth}|L{0.77\textwidth}|}
+\caption{Scenario Fixture Definitions from \texttt{assert-scenario}}\label{tab:scenariofacts}\\
+\hline
+\rowcolor{tableheadbg}
+\textbf{Scenario} & \textbf{Complete \texttt{phone-user} Values} \\ \hline
+\hline
+\endfirsthead
+\hline
+\rowcolor{tableheadbg}
+\textbf{Scenario} & \textbf{Complete \texttt{phone-user} Values} \\ \hline
+\hline
+\endhead
+\texttt{scenario-01} & \texttt{phone-age=very-old, battery-health=very-poor, performance=very-slow, storage-status=full, physical-condition=minor-damage, software-support=unsupported, platform=android, repair-cost-level=high, budget-cad=1000, budget-level=medium, urgency=high, camera-need=medium, gaming-need=low, work-study-dependence=high, latest-model-importance=low, used-phone-comfort=maybe, trade-in-available=yes, battery-health-percent=15, battery-score=15, performance-score=20, budget-score=60, urgency-score=90, repair-cost-percent=75}. \\ \hline
+\texttt{scenario-02} & \texttt{phone-age=moderate, battery-health=good, performance=fast, storage-status=enough, physical-condition=good, software-support=supported, platform=android, repair-cost-level=low, budget-cad=800, budget-level=medium, urgency=low, camera-need=medium, gaming-need=low, work-study-dependence=medium, latest-model-importance=low, used-phone-comfort=no, trade-in-available=no, battery-health-percent=85, battery-score=85, performance-score=88, budget-score=55, urgency-score=20, repair-cost-percent=10}. \\ \hline
+\texttt{scenario-03} & \texttt{phone-age=moderate, battery-health=very-poor, performance=acceptable, storage-status=enough, physical-condition=good, software-support=supported, platform=android, repair-cost-level=medium, budget-cad=700, budget-level=medium, urgency=medium, camera-need=low, gaming-need=low, work-study-dependence=high, latest-model-importance=low, used-phone-comfort=maybe, trade-in-available=no, battery-health-percent=18, battery-score=18, performance-score=70, budget-score=55, urgency-score=50, repair-cost-percent=25}. \\ \hline
+\texttt{scenario-04} & \texttt{phone-age=old, battery-health=poor, performance=slow, storage-status=almost-full, physical-condition=minor-damage, software-support=limited, platform=android, repair-cost-level=high, budget-cad=400, budget-level=low, urgency=high, camera-need=medium, gaming-need=low, work-study-dependence=high, latest-model-importance=low, used-phone-comfort=yes, trade-in-available=yes, battery-health-percent=30, battery-score=30, performance-score=35, budget-score=25, urgency-score=85, repair-cost-percent=65}. \\ \hline
+\texttt{scenario-05} & \texttt{phone-age=old, battery-health=moderate, performance=slow, storage-status=almost-full, physical-condition=good, software-support=limited, platform=ios, repair-cost-level=medium, budget-cad=1800, budget-level=high, urgency=medium, camera-need=high, gaming-need=high, work-study-dependence=high, latest-model-importance=high, used-phone-comfort=no, trade-in-available=yes, battery-health-percent=55, battery-score=55, performance-score=45, budget-score=90, urgency-score=65, repair-cost-percent=35}. \\ \hline
+\hline
+\end{longtable}
+
+\subsection{Complete CLIPS Function Inventory}
+Table~\ref{tab:functioninventory} lists every defined \texttt{deffunction} in the project logic files.
+
+\begin{longtable}{|L{0.30\textwidth}|L{0.22\textwidth}|L{0.35\textwidth}|}
+\caption{Complete Function Inventory}\label{tab:functioninventory}\\
+\hline
+\rowcolor{tableheadbg}
+\textbf{Function} & \textbf{File} & \textbf{Role} \\ \hline
+\hline
+\endfirsthead
+\hline
+\rowcolor{tableheadbg}
+\textbf{Function} & \textbf{File} & \textbf{Role} \\ \hline
+\hline
+\endhead
+\texttt{fuzzy-battery-poor}, \texttt{fuzzy-battery-moderate}, \texttt{fuzzy-battery-good} & fuzzy.clp & battery memberships \\ \hline
+\texttt{fuzzy-performance-poor}, \texttt{fuzzy-performance-good} & fuzzy.clp & performance memberships \\ \hline
+\texttt{fuzzy-budget-low}, \texttt{fuzzy-budget-medium}, \texttt{fuzzy-budget-high} & fuzzy.clp & budget memberships \\ \hline
+\texttt{fuzzy-urgency-low}, \texttt{fuzzy-urgency-high} & fuzzy.clp & urgency memberships \\ \hline
+\texttt{fuzzy-repair-cost-high} & fuzzy.clp & repair-cost membership \\ \hline
+\texttt{combine-cf} & fuzzy.clp & CF combination helper \\ \hline
+\texttt{count-model-suggestions} & rules.clp & model cap helper by rule-id \\ \hline
+\texttt{print-results} & rules.clp & ordered report printer \\ \hline
+\texttt{clear-phone-users}, \texttt{ask-choice}, \texttt{ask-int} & sample-scenarios.clp & interaction helpers \\ \hline
+\texttt{budget-cad-to-level}, \texttt{budget-cad-to-score} & sample-scenarios.clp & budget conversion \\ \hline
+\code{battery-percent-to-health},\newline \code{performance-score-to-level} & sample-scenarios.clp & condition conversion \\ \hline
+\texttt{urgency-score-to-level}, \texttt{repair-percent-to-level} & sample-scenarios.clp & urgency/repair conversion \\ \hline
+\texttt{run-interactive}, \texttt{assert-scenario}, \texttt{run-scenario}, \texttt{run-scenario-silent} & sample-scenarios.clp & execution entry points \\ \hline
+\texttt{expected-primary-rule}, \texttt{expected-cf-rule}, \texttt{expected-final-rule} & sample-scenarios.clp & test expectation mapping \\ \hline
+\texttt{recommendation-exists}, \texttt{recommendation-cf-exists}, \texttt{final-decision-exists}, \texttt{cf-not-exists}, \texttt{phone-category-exists} & sample-scenarios.clp & fact existence checks \\ \hline
+\code{test-scenario-negative-cf},\newline \code{test-scenario-negative-category},\newline \code{test-scenario-negative-final},\newline \code{test-scenario}, \code{run-all-scenario-tests} & sample-scenarios.clp & regression testing logic \\ \hline
+\hline
+\end{longtable}
+
+\subsection{Complete Rule Catalog (All 55 Rules)}
+Table~\ref{tab:rulecatalog} lists every \texttt{defrule} in \filepath{rules.clp} with a concise trigger-and-output summary.
+
+{\small
+\begin{longtable}{|L{0.34\textwidth}|L{0.26\textwidth}|L{0.33\textwidth}|}
+\caption{Complete Rule Catalog (rules.clp)}\label{tab:rulecatalog}\\
+\hline
+\rowcolor{tableheadbg}
+\textbf{Rule Name} & \textbf{Trigger Summary} & \textbf{Asserted Output} \\ \hline
+\hline
+\endfirsthead
+\hline
+\rowcolor{tableheadbg}
+\textbf{Rule Name} & \textbf{Trigger Summary} & \textbf{Asserted Output} \\ \hline
+\hline
+\endhead
+\code{infer-no-upgrade-needed} & healthy modern profile & \code{no-upgrade-needed} \\ \hline
+\code{infer-replacement-needed-multiple-issues} & old + poor battery + slow performance & \code{replacement-needed(high)} \\ \hline
+\code{infer-replacement-needed-old-unsupported} & old/very-old + unsupported software & \code{replacement-needed(high)} \\ \hline
+\code{infer-replacement-needed-broken-expensive} & broken/major damage + high repair level & \code{replacement-needed(high)} \\ \hline
+\code{infer-replacement-needed-medium-degradation} & moderate-old degradation mix & \code{replacement-needed(medium)} \\ \hline
+\code{infer-replacement-needed-medium-performance} & weak performance + limited support & \code{replacement-needed(medium)} \\ \hline
+\code{finding-very-old-phone} & phone-age very-old & \code{finding(F1)} \\ \hline
+\code{finding-poor-battery} & poor battery and no battery marker & \code{finding(F2)} + marker \\ \hline
+\code{finding-slow-performance} & slow/very-slow performance & \code{finding(F3)} \\ \hline
+\code{finding-full-storage} & storage full & \code{finding(F4)} \\ \hline
+\code{finding-unsupported-software} & unsupported software & \code{finding(F5)} \\ \hline
+\code{rule-18-trade-in} & trade-in available yes & \code{recommendation(R18)} \\ \hline
+\code{rule-17-refurbished-option} & replacement-needed + low/medium budget + used comfort & \code{recommendation(R17)} \\ \hline
+\code{rule-19-buy-new-phone} & replacement-needed high + medium/high budget & \code{recommendation(R19)} \\ \hline
+\code{rule-20-keep-current-phone} & no-upgrade-needed + urgency low/medium & \code{recommendation(R20)} \\ \hline
+\code{rule-21-repair-instead} & damage + viable repair + usable performance/support & \code{recommendation(R21)} \\ \hline
+\code{rule-22-avoid-flagship} & low/medium budget + high latest-model desire + moderate needs & \code{warning(R22)} \\ \hline
+\code{rule-23-buy-mid-range} & replacement-needed + medium budget + balanced needs & \code{recommendation(R23)} \\ \hline
+\code{rule-24-buy-flagship} & replacement-needed + high budget + high needs & \code{recommendation(R24)} \\ \hline
+\code{rule-25-wait-before-buying} & no replacement-needed + low urgency + usable phone & \code{recommendation(R25)} \\ \hline
+\code{warning-unsupported-software} & unsupported software & \code{warning(R8)} \\ \hline
+\code{cf-buy-new-phone} & replacement-needed + multi-factor score build & \code{recommendation-cf(BUY-NEW-CF)} \\ \hline
+\code{cf-wait-before-buying} & no high replacement-needed + healthy current profile & \code{recommendation-cf(WAIT-CF)} \\ \hline
+\code{cf-replace-battery} & poor battery + low repair-percent + usable rest & \code{recommendation-cf(BATTERY-REPLACE-CF)} \\ \hline
+\code{cf-repair-instead-of-buy} & damage + low/medium repair + usable rest & \code{recommendation-cf(REPAIR-CF)} \\ \hline
+\code{cf-buy-refurbished} & replacement-needed + low/medium budget + used comfort & \code{recommendation-cf(REFURB-CF)} \\ \hline
+\code{cf-buy-mid-range} & replacement-needed + medium budget + balanced needs & \code{recommendation-cf(MID-RANGE-CF)} \\ \hline
+\code{cf-buy-flagship} & replacement-needed + high budget + high needs & \code{recommendation-cf(FLAGSHIP-CF)} \\ \hline
+\code{cf-keep-current} & no-upgrade-needed profile & \code{recommendation-cf(KEEP-CURRENT-CF)} \\ \hline
+\code{rule-fuzzy-poor-battery} & fuzzy poor-battery membership > 0.30 & \code{recommendation-cf(FUZZY-BATTERY-POOR)} \\ \hline
+\code{rule-fuzzy-poor-performance} & fuzzy poor-performance membership > 0.30 & \code{recommendation-cf}\allowbreak\code{(FUZZY-PERFORMANCE-POOR)} \\ \hline
+\code{rule-fuzzy-high-repair-cost} & fuzzy high-repair membership > 0.30 & \code{recommendation-cf}\allowbreak\code{(FUZZY-REPAIR-HIGH)} \\ \hline
+\code{rule-fuzzy-high-budget-}\allowbreak\code{high-urgency} & fuzzy min(high-budget, high-urgency) > 0.30 & \code{recommendation-cf}\allowbreak\code{(FUZZY-BUDGET-URGENCY)} \\ \hline
+\code{rule-fuzzy-low-urgency} & no high replacement-needed + fuzzy low urgency > 0.30 & \code{recommendation-cf}\allowbreak\code{(FUZZY-WAIT)} \\ \hline
+\code{final-decision-buy-new} & BUY-NEW-CF >= 0.70 & \code{final-decision}\allowbreak\code{(FINAL-BUY-NEW)} \\ \hline
+\code{final-decision-keep-}\allowbreak\code{current} & KEEP-CURRENT-CF >= 0.70 and not dominated by BUY-NEW-CF & \code{final-decision}\allowbreak\code{(FINAL-KEEP)} \\ \hline
+\code{final-decision-replace-}\allowbreak\code{battery} & BATTERY-REPLACE-CF >= 0.70 & \code{final-decision}\allowbreak\code{(FINAL-REPLACE-BATTERY)} \\ \hline
+\code{final-decision-repair} & REPAIR-CF >= 0.70 & \code{final-decision}\allowbreak\code{(FINAL-REPAIR)} \\ \hline
+\code{final-decision-buy-}\allowbreak\code{flagship} & FLAGSHIP-CF >= 0.70 and not dominated by BUY-NEW-CF & \code{final-decision}\allowbreak\code{(FINAL-BUY-FLAGSHIP)} \\ \hline
+\code{final-decision-buy-}\allowbreak\code{midrange} & MID-RANGE-CF >= 0.65 and not dominated by BUY-NEW-CF & \code{final-decision}\allowbreak\code{(FINAL-BUY-MIDRANGE)} \\ \hline
+\code{final-decision-buy-refurb} & REFURB-CF >= 0.60 and not dominated by BUY-NEW-CF & \code{final-decision}\allowbreak\code{(FINAL-BUY-REFURB)} \\ \hline
+\code{category-keep-current} & final decision keep-current/wait & \code{phone-category-suggestion}\allowbreak\code{(C-KEEP)} \\ \hline
+\code{category-repair} & final decision repair & \code{phone-category-suggestion}\allowbreak\code{(C-REPAIR)} \\ \hline
+\code{category-replace-battery} & final decision replace-battery & \code{phone-category-suggestion}\allowbreak\code{(C-BATTERY)} \\ \hline
+\code{category-mid-range} & final decision buy-mid-range & \code{phone-category-suggestion}\allowbreak\code{(C-MID)} \\ \hline
+\code{category-refurb} & final decision buy-refurbished & \code{phone-category-suggestion}\allowbreak\code{(C-REFURB)} \\ \hline
+\code{category-flagship} & final decision buy-flagship & \code{phone-category-suggestion}\allowbreak\code{(C-FLAG)} \\ \hline
+\code{category-buy-new} & final decision buy-new + budget branch & \code{phone-category-suggestion}\allowbreak\code{(C-*UPGRADE)} \\ \hline
+\code{final-decision-wait} & WAIT-CF >= 0.70 & \code{final-decision(FINAL-WAIT)} \\ \hline
+\code{final-decision-fallback} & no final decision + supporting keep/wait recommendation & \code{final-decision}\allowbreak\code{(FINAL-FALLBACK)} \\ \hline
+\code{model-flagship-camera-}\allowbreak\code{from-data} & final decision buy-flagship/buy-new + flagship camera fit + count cap & \code{phone-model-suggestion}\allowbreak\code{(M1)} \\ \hline
+\code{model-midrange-value-}\allowbreak\code{from-data} & final decision buy-mid-range/buy-new + value mid-range fit + count cap & \code{phone-model-suggestion}\allowbreak\code{(M4)} \\ \hline
+\code{model-budget-from-data} & upgrade path + low budget + budget segment fit + count cap & \code{phone-model-suggestion(M6)} \\ \hline
+\code{model-refurb-estimate-}\allowbreak\code{from-market} & final decision buy-refurbished + used comfort + premium/flagship fit + cap & \code{phone-model-suggestion}\allowbreak\code{(M8)} \\ \hline
+\code{model-wait-watchlist-}\allowbreak\code{from-data} & final decision wait + high-spec flagship fit + count cap & \code{phone-model-suggestion}\allowbreak\code{(M10)} \\ \hline
+\hline
+\end{longtable}
+}
+
+\section{Limitations and Future Work}
+The system remains deterministic-plus-heuristic rather than learned from historical outcomes. Market data is snapshot-based and not live. Some real-world constraints (financing behavior, carrier lock-in, long-term ecosystem switching cost) are not modeled explicitly. Future work can add these constraints and refine top-k model diversification while preserving explainability.
+
+\section{Conclusion}
+The project now represents a full expert-system workflow: structured input acquisition, layered inferencing, conflict control, single final decision selection, auditable supporting evidence, category/model suggestion output, and scenario regression testing with negative checks. The design remains faithful to COMP 474 principles by keeping reasoning in CLIPS and maintaining transparent rule-based logic throughout.
+
+\section*{References}
+\begin{enumerate}
+  \item Showmik121, \emph{Smartphones Dataset 2026 (1000 devices)}, Kaggle.\\
+  \url{https://www.kaggle.com/datasets/showmik121/smartphones-dataset-2026-1000-devices}
+
+  \item Userdominator, \emph{Mobile Phone Price Dataset}, Kaggle.\\
+  \url{https://www.kaggle.com/datasets/userdominator/mobile-phone-price-dataset}
+\end{enumerate}
+
+\end{document}
